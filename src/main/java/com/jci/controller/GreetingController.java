@@ -1,6 +1,9 @@
-package com.example.restservice;
+package com.jci.controller;
 
 import java.util.concurrent.atomic.AtomicLong;
+
+import com.jci.model.Greeting;
+import com.jci.model.Person;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,11 +26,12 @@ public class GreetingController {
 
   @GetMapping("/greeting")
   public ResponseEntity<Greeting> greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-    return new ResponseEntity<>(new Greeting(counter.incrementAndGet(), String.format(template, name)),HttpStatus.OK);
+    return new ResponseEntity<>(new Greeting(counter.incrementAndGet(), String.format(template, name)), HttpStatus.OK);
   }
 
   @PostMapping("/greeting")
   public ResponseEntity<Greeting> greeting(@RequestBody Person person) {
-    return new ResponseEntity<>(new Greeting(counter.getAndIncrement(), String.format(template, person.getName())), HttpStatus.OK);
+    return new ResponseEntity<Greeting>(
+        new Greeting(counter.getAndIncrement(), String.format(template, person.getName())), HttpStatus.OK);
   }
 }
